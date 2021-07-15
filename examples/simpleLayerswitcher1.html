@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>simple layer switcher</title>
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js"></script>
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../src/assets/index.css" />
+  <script src="../build/mapbox-layerswitcher.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+</body>
+<script type="module">
+  import MapboxLayerSwitcher from "../src/index.js";
+  mapboxgl.accessToken =
+    "pk.eyJ1Ijoid2h1Z2lzZXIiLCJhIjoiY2ttNHk1d3hjMDk2azJ1cDFyN28ydmZ4MSJ9.fQz7OdATkXCPsCypo14KKw";
+
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    zoom: 15,
+    center: [-71.97722138410576, -13.517379300798098]
+  });
+
+  // Wait until the map has finished loading.
+  map.on('style.load', function () {
+    // Add a custom vector tileset source. This tileset contains
+    // point features representing museums. Each feature contains
+    // three properties. For example:
+    // {
+    //     alt_name: "Museo Arqueologico",
+    //     name: "Museo Inka",
+    //     tourism: "museum"
+    // }
+    map.addSource('museums', {
+      type: 'vector',
+      url: 'mapbox://mapbox.2opop9hr'
+    });
+    map.addLayer({
+      'id': 'museums',
+      'type': 'circle',
+      'source': 'museums',
+      'layout': {
+        // Make the layer visible by default.
+        'visibility': 'visible'
+      },
+      'paint': {
+        'circle-radius': 8,
+        'circle-color': 'rgba(55,148,179,1)'
+      },
+      'source-layer': 'museum-cusco'
+    });
+
+    // Add the Mapbox Terrain v2 vector tileset. Read more about
+    // the structure of data in this tileset in the documentation:
+    // https://docs.mapbox.com/vector-tiles/reference/mapbox-terrain-v2/
+    map.addSource('contours', {
+      type: 'vector',
+      url: 'mapbox://mapbox.mapbox-terrain-v2'
+    });
+    map.addLayer({
+      'id': 'contours',
+      'type': 'line',
+      'source': 'contours',
+      'source-layer': 'contour',
+      'layout': {
+        // Make the layer visible by default.
+        'visibility': 'visible',
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      'paint': {
+        'line-color': '#877b59',
+        'line-width': 1
+      }
+    });
+  });
+
+  let layerswitcher = new MapboxLayerSwitcher({
+    layers: [
+      {
+        id: "museums",
+        name: "博物馆"
+      },
+      {
+        id: "contours",
+        name: "等高线"
+      },
+      {
+        id:"mapbox://styles/mapbox/satellite-v9",
+        name:"影像数据",
+        type:"base"
+      },
+      {
+        id:"mapbox://styles/mapbox/streets-v11",
+        name:"矢量数据",
+        type:"base"
+      }
+    ],
+    template: 'simple1'
+  });
+  map.addControl(layerswitcher, "top-right");
+</script>
+
+</html>
