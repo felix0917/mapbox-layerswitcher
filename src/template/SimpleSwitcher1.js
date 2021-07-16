@@ -3,7 +3,6 @@ class SimpleSwitcher1 {
         this._map = map;
         this._container = container;
         this._layers = layers;
-        this._checked = {};
 
         this.init();
     }
@@ -14,36 +13,73 @@ class SimpleSwitcher1 {
         this._container.className = 'mapboxgl-ctrl';
         this._panel = document.createElement('nav');
         this._panel.id = 'ml-panel-1';
-        this._panel.className = 'ml-panel-1'
+        this._panel.className = 'ml-panel-1';
+        this._panelContentStr = '';
 
-        this._checkItemsStr = '';
-        for (let i = 0; i < this._layers.length; i++) {
-            let { id: layerId, name: layerName, type: layerType } = this._layers[i];
+        this.layersClassify();
 
-            if (layerType === 'base') {
-                this._checkItemsStr +=
-                    `<input type='radio' id='${layerId}' layertype='${layerType ? layerType : ''}' name='base' checked='checked' />
-                    <label for='${layerId}' class='textnoselect'>${layerName ? layerName : layerId}</label>`;
-            } else {
-                this._checkItemsStr +=
-                    `<input type='checkbox' id='${layerId}' layertype='${layerType ? layerType : ''}' checked='checked' />
-                     <label for='${layerId}' class='textnoselect'>${layerName ? layerName : layerId}</label>`;
+        this.createOverlaysPanel();
+        this.createBasemapsPanel();
 
-                this._checked[layerId] = true;
-            }
-        }
-
-        this._panel.innerHTML = this._checkItemsStr;
+        this._panel.innerHTML = this._panelContentStr;
         this._container.appendChild(this._panel);
 
+        this.addPanelEvent();
+    }
+
+    layersClassify() {
+        this._overlays = [];
+        this._basemaps = [];
+
+        let layers = this._layers;
+
+        for (let i = 0; i < layers.length; i++) {
+            let layer = layers[i];
+            let { type } = layer;
+            
+            if (type === 'base') {
+                this._basemaps.push(layer);
+            } else {
+                this._overlays.push(layer);
+            }
+        }
+    }
+
+    createBasemapsPanel() {
+        let basemaps = this._basemaps;
+
+        for (let i = 0; i < basemaps.length; i++) {
+            let { id, name, type } = basemaps[i];
+            this._panelContentStr +=
+                `<input type='radio' id='${id}' layertype='${type}' name='${type}' checked='checked' />
+                <label for='${id}' class='textnoselect'>${name ? name : id}</label>`;
+        }
+    }
+
+    createOverlaysPanel() {
+        this._checked = {};
+        let overlays = this._overlays;
+
+        for (let i = 0; i < overlays.length; i++) {
+            let { id, name, type } = overlays[i];
+
+            this._panelContentStr +=
+                `<input type='checkbox' id='${id}' layertype='${type ? type : ''}' checked='checked' />
+                <label for='${id}' class='textnoselect'>${name ? name : id}</label>`;
+
+            this._checked[id] = true;
+        }
+    }
+
+    addPanelEvent() {
         this._map.on('load', () => {
             document.getElementById('ml-panel-1').addEventListener('change', e => {
                 let type = e.target.attributes.layertype.nodeValue;
 
                 if (type === 'base') {// base layers
-                    this.changeBaseStyle(e);
-                } else { // Thematic layers
-                    this.changeThematicVisible(e);
+                    this.changeBaseMap(e);
+                } else { // Overlay layers
+                    this.changeOverlaysVisible(e);
                 }
 
                 this._map._update();
@@ -51,7 +87,7 @@ class SimpleSwitcher1 {
         })
     }
 
-    changeBaseStyle(e) {
+    changeBaseMap(e) {
         let mapstyle = e.target.id;
         this._map.setStyle(mapstyle);
 
@@ -63,15 +99,14 @@ class SimpleSwitcher1 {
         })
     }
 
-    changeThematicVisible(e) {
+    changeOverlaysVisible(e) {
         let layerId = e.target.id;
-        let layer = this._map.getLayer(layerId);
 
         if (e.target.checked) {
-            layer.setLayoutProperty('visibility', 'visible');
+            this._map.setLayoutProperty(layerId, 'visibility', 'visible');
             this._checked[layerId] = true;
         } else {
-            layer.setLayoutProperty('visibility', 'none');
+            this._map.setLayoutProperty(layerId, 'visibility', 'none');
             this._checked[layerId] = false;
         }
     }

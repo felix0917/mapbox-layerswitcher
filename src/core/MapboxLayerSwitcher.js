@@ -1,6 +1,7 @@
 import defaultValue from '../utils/defaultValue.js';
 import SimpleSwitcher1 from '../template/SimpleSwitcher1.js';
 import SimpleSwitcher2 from '../template/SimpleSwitcher2.js';
+import TreeSwitcher1 from '../template/TreeSwitcher1.js';
 
 class MapboxLayerSwitcher {
     constructor(options = {}) {
@@ -18,6 +19,9 @@ class MapboxLayerSwitcher {
                 break;
             case 'simple2':
                 new SimpleSwitcher2(this._map, this._container, this._layers);
+                break;
+            case 'tree1':
+                new TreeSwitcher1(this._map, this._container, this._layers);
                 break;
             default:
                 console.error('the template parameters are illegal!')

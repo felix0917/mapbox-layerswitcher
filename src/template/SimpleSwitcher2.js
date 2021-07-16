@@ -14,33 +14,70 @@ class SimpleSwitcher2 {
         this._panel = document.createElement('nav');
         this._panel.id = 'ml-panel-2';
         this._panel.className = 'ml-panel-2';
-        this._checked = {};
+        this._panelContentStr = '';
 
-        this._checkItemsStr = '';
-        for (let i = 0; i < this._layers.length; i++) {
-            let { id: layerId, name: layerName, type: layerType } = this._layers[i];
+        this.layersClassify();
 
-            if (layerType === 'base') {
+        this.createOverlaysPanel();
+        this.createBasemapsPanel();
 
-            } else {
-                this._checkItemsStr +=
-                    `<a id='${layerId}' href='#' class='active' layertype='${layerType ? layerType : ''}'>${layerName ? layerName : layerId}</a>`
-
-                this._checked[layerId] = true;
-            }
-        }
-
-        this._panel.innerHTML = this._checkItemsStr;
+        this._panel.innerHTML = this._panelContentStr;
         this._container.appendChild(this._panel);
 
+        this.addPanelEvent();
+    }
+
+    layersClassify() {
+        this._overlays = [];
+        this._basemaps = [];
+
+        let layers = this._layers;
+
+        for (let i = 0; i < layers.length; i++) {
+            let layer = layers[i];
+            let { type } = layer;
+            
+            if (type === 'base') {
+                this._basemaps.push(layer);
+            } else {
+                this._overlays.push(layer);
+            }
+        }
+    }
+
+    createBasemapsPanel() {
+        let basemaps = this._basemaps;
+
+        for (let i = 0; i < basemaps.length; i++) {
+            let { id, name, type } = basemaps[i];
+            this._panelContentStr +=
+            `<a id='${id}' name='base' href='#' class='active' layertype='${type ? type : ''}'>${name ? name : id}</a>`;
+        }
+    }
+
+    createOverlaysPanel() {
+        this._checked = {};
+        let overlays = this._overlays;
+
+        for (let i = 0; i < overlays.length; i++) {
+            let { id, name, type } = overlays[i];
+
+            this._panelContentStr +=
+            `<a id='${id}' href='#' class='active' layertype='${type ? type : ''}'>${name ? name : id}</a>`;
+
+            this._checked[id] = true;
+        }
+    }
+
+    addPanelEvent() {
         this._map.on('load', () => {
             document.getElementById('ml-panel-2').addEventListener('click', e => {
                 let type = e.target.attributes.layertype.nodeValue;
 
                 if (type === 'base') {// base layers
-                   this.changeBaseStyle(e);
-                } else { // Thematic layers
-                  this.changeThematicVisible(e);
+                    this.changeBaseMap(e);
+                } else { // Overlay layers
+                    this.changeOverlaysVisible(e);
                 }
 
                 this._map._update();
@@ -48,9 +85,18 @@ class SimpleSwitcher2 {
         })
     }
 
-    changeBaseStyle(e) {
+    changeBaseMap(e) {
         let mapstyle = e.target.id;
         this._map.setStyle(mapstyle);
+
+        let alinkArrLike = e.target.parentNode.children;
+        for (let i = 0; i < alinkArrLike.length; i++) {
+            if (alinkArrLike[i].name === 'base' && alinkArrLike[i].id !== mapstyle) {
+                alinkArrLike[i].className = '';
+            } else {
+                alinkArrLike[i].className = 'active';
+            }
+        }
 
         this._map.on('style.load', () => {
             for (let layerId in this._checked) {
@@ -60,17 +106,16 @@ class SimpleSwitcher2 {
         })
     }
 
-    changeThematicVisible(e) {
+    changeOverlaysVisible(e) {
         let layerId = e.target.id;
-        let layer = this._map.getLayer(layerId);
         let alink = document.getElementById(layerId);
 
         if (!this._checked[layerId]) {
-            layer.setLayoutProperty('visibility', 'visible');
+            this._map.setLayoutProperty(layerId, 'visibility', 'visible');
             alink.className = 'active';
             this._checked[layerId] = true;
         } else {
-            layer.setLayoutProperty('visibility', 'none');
+            this._map.setLayoutProperty(layerId, 'visibility', 'none');
             alink.className = '';
             this._checked[layerId] = false;
         }

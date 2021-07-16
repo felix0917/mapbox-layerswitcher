@@ -97,25 +97,31 @@
   let layerswitcher = new MapboxLayerSwitcher({
     layers: [
       {
-        id: "museums",
-        name: "博物馆"
+        id: "museums-group",
+        name: "博物馆组",
+        children: [
+          {
+            id: "museums",
+            name: "博物馆"
+          }
+        ]
       },
       {
         id: "contours",
         name: "等高线"
       },
       {
-        id:"mapbox://styles/mapbox/satellite-v9",
-        name:"影像数据",
-        type:"base"
+        id: "mapbox://styles/mapbox/satellite-v9",
+        name: "影像数据",
+        type: "base"
       },
       {
-        id:"mapbox://styles/mapbox/streets-v11",
-        name:"矢量数据",
-        type:"base"
+        id: "mapbox://styles/mapbox/streets-v11",
+        name: "矢量数据",
+        type: "base"
       }
     ],
-    template: 'simple2'
+    template: 'tree1'
   });
   map.addControl(layerswitcher, "top-right");
 </script>
