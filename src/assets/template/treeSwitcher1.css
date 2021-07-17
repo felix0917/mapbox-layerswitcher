@@ -23,22 +23,22 @@
     font-size: 1em;
 }
 
-.basemap-group label {
+.ml-basemap-group label {
     padding-left: 1.2em;
     font-size: small;
 }
 
-.basemap-group ul {
+.ml-basemap-group ul {
     padding-left: 1.2em;
     margin: 0.1em 0 0 0;
 }
 
-.basemap-group li {
+.ml-basemap-group li {
     position: relative;
     margin-top: 0.3em;
 }
 
-.basemap-group li input {
+.ml-basemap-group li input {
     position: absolute;
     left: 1.2em;
     height: 1em;
@@ -48,7 +48,7 @@
     margin-top: 0.35em;
 }
 
-.basemap-group li label {
+.ml-basemap-group li label {
     padding-left: 2.7em;
     padding-right: 1.2em;
     display: inline-block;
@@ -56,12 +56,12 @@
     font-size: small;
 }
 
-.overlay-group li {
+.ml-overlay-group li {
     position: relative;
     margin-top: 0.3em;
 }
 
-.overlay-group button {
+.ml-overlay-group button {
     position: absolute;
     left: 0;
     display: inline-block;
@@ -81,7 +81,7 @@
     border: none;
 }
 
-.overlay-group input {
+.ml-overlay-group input {
     position: absolute;
     left: 1.2em;
     height: 1em;
@@ -90,7 +90,7 @@
     margin: 0px;
 }
 
-.overlay-group label {
+.ml-overlay-group label {
     padding-left: 2.7em;
     padding-right: 1.2em;
     display: inline-block;
@@ -98,16 +98,16 @@
     font-size: small;
 }
 
-.overlay-group ul {
+.ml-overlay-group ul {
     padding-left: 1.2em;
     margin: 0.1em 0 0 0;
 }
 
-.ml-layer-group {
+.ml-overlay-group-label {
     font-weight: bold;
 }
 
-.ml-layer {
+.ml-overlay-layer, .ml-basemap-layer {
     font-weight: unset;
 }
 
