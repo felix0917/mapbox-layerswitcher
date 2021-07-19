@@ -8,6 +8,7 @@
     box-sizing: border-box;
     overflow-y: auto;
     min-width: 240px;
+    font-size: 13px;
 }
 
 .ml-panel-tree1 ul {
@@ -25,7 +26,7 @@
 
 .ml-basemap-group label {
     padding-left: 1.2em;
-    font-size: small;
+    font-size: 13px;
 }
 
 .ml-basemap-group ul {
@@ -53,7 +54,7 @@
     padding-right: 1.2em;
     display: inline-block;
     margin-top: 1px;
-    font-size: small;
+    font-size: 13px;
 }
 
 .ml-overlay-group li {
@@ -95,7 +96,7 @@
     padding-right: 1.2em;
     display: inline-block;
     margin-top: 1px;
-    font-size: small;
+    font-size: 13px;
 }
 
 .ml-overlay-group ul {
@@ -103,7 +104,7 @@
     margin: 0.1em 0 0 0;
 }
 
-.ml-overlay-group-label {
+.ml-overlay-group-label, .ml-basemap-group-label {
     font-weight: bold;
 }
 

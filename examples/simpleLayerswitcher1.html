@@ -9,7 +9,6 @@
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js"></script>
   <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css" rel="stylesheet" />
   <link rel="stylesheet" href="../src/assets/index.css" />
-  <script src="../build/mapbox-layerswitcher.js"></script>
   <style>
     body {
       margin: 0;
@@ -98,24 +97,40 @@
     layers: [
       {
         id: "museums",
-        name: "博物馆"
+        name: "museums"
       },
       {
         id: "contours",
-        name: "等高线"
+        name: "contours"
       },
       {
-        id:"mapbox://styles/mapbox/satellite-v9",
-        name:"影像数据",
-        type:"base"
+        id: "mapbox://styles/mapbox/streets-v11",
+        name: "streets",
+        type: "base"
       },
       {
-        id:"mapbox://styles/mapbox/streets-v11",
-        name:"矢量数据",
-        type:"base"
+        id: "mapbox://styles/mapbox/light-v10",
+        name: "light",
+        type: "base"
+      },
+      {
+        id: "mapbox://styles/mapbox/dark-v10",
+        name: "dark",
+        type: "base"
+      },
+      {
+        id: "mapbox://styles/mapbox/outdoors-v11",
+        name: "outdoors",
+        type: "base"
+      },
+      {
+        id: "mapbox://styles/mapbox/satellite-v9",
+        name: "satellite",
+        type: "base"
       }
     ],
-    template: 'simple1'
+    template: 'simple1',
+    activemode:'mouseover'
   });
   map.addControl(layerswitcher, "top-right");
 </script>
