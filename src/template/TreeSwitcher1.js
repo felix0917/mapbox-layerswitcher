@@ -57,8 +57,8 @@ class TreeSwitcher1 {
     }
 
     /**
-* 创建图层选择器控件
-*/
+     * 创建图层选择器控件
+     */
     createLayerSwitcherBtn() {
         this._layerSwitcherBtn = document.createElement('button');
         this._layerSwitcherBtn.className = 'ml-layerSwitcherBtn';
