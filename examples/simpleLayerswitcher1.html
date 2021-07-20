@@ -8,7 +8,7 @@
   <title>simple layer switcher</title>
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js"></script>
   <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../src/assets/index.css" />
+  <script src="./mapbox-layerswitcher.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -27,10 +27,8 @@
 <body>
   <div id="map"></div>
 </body>
-<script type="module">
-  import MapboxLayerSwitcher from "../src/index.js";
-  mapboxgl.accessToken =
-    "pk.eyJ1Ijoid2h1Z2lzZXIiLCJhIjoiY2ttNHk1d3hjMDk2azJ1cDFyN28ydmZ4MSJ9.fQz7OdATkXCPsCypo14KKw";
+<script>
+  mapboxgl.accessToken = localStorage.getItem('MapboxToken')
 
   var map = new mapboxgl.Map({
     container: 'map',
@@ -104,11 +102,6 @@
         name: "contours"
       },
       {
-        id: "mapbox://styles/mapbox/streets-v11",
-        name: "streets",
-        type: "base"
-      },
-      {
         id: "mapbox://styles/mapbox/light-v10",
         name: "light",
         type: "base"
@@ -126,6 +119,11 @@
       {
         id: "mapbox://styles/mapbox/satellite-v9",
         name: "satellite",
+        type: "base"
+      },
+      {
+        id: "mapbox://styles/mapbox/streets-v11",
+        name: "streets",
         type: "base"
       }
     ],
