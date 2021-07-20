@@ -86,7 +86,7 @@ localStorage.setItem('accessToken', {your token});
 
   *Basemap*
 
-  ```json
+  ```js
      {
           id: "mapbox://styles/mapbox/streets-v11", // basemap's url
           name: "streets", // The name of the layer displayed on the panel
@@ -96,7 +96,7 @@ localStorage.setItem('accessToken', {your token});
 
   *Overlays*
 
-  ```json
+  ```js
   {
       id: "museums-group",
       name: "museums-group",
