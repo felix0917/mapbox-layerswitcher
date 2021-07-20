@@ -9,12 +9,16 @@ Grouped layer list control for a [Mapbox](https://github.com/mapbox/mapbox-gl-js
 **npm**
 
 ```
-npm i mapbox-layerswitcher --save-dev
+npm i mb-layerswitcher --save-dev
 ```
 
 **cdn**
 
 ```html
+<!-- min -->
+<script src="./mapbox-layerswitcher.min.js"></script>
+
+<!-- Unminified -->
 <script src="./mapbox-layerswitcher.min.js"></script>
 ```
 
@@ -86,7 +90,7 @@ localStorage.setItem('accessToken', {your token});
 
   *Basemap*
 
-  ```json
+  ```js
      {
           id: "mapbox://styles/mapbox/streets-v11", // basemap's url
           name: "streets", // The name of the layer displayed on the panel
@@ -96,7 +100,7 @@ localStorage.setItem('accessToken', {your token});
 
   *Overlays*
 
-  ```json
+  ```js
   {
       id: "museums-group",
       name: "museums-group",

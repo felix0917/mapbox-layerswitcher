@@ -1,8 +1,8 @@
 {
-    "name": "mapbox-layerswitcher",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "name": "mb-layerswitcher",
+    "version": "1.0.1",
+    "description": "Layer control for Mapbox",
+    "main": "mapbox-layerswitcher.min.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "cross-env NODE_ENV=development rollup -c ./rollup.config.js",
