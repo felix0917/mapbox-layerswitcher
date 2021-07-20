@@ -16,10 +16,10 @@ npm i mb-layerswitcher --save-dev
 
 ```html
 <!-- min -->
-<script src="./mapbox-layerswitcher.min.js"></script>
+<script src="https://unpkg.com/mb-layerswitcher@1.0.1/mapbox-layerswitcher.min.js"></script>
 
 <!-- Unminified -->
-<script src="./mapbox-layerswitcher.min.js"></script>
+<script src="https://unpkg.com/mb-layerswitcher@1.0.1/mapbox-layerswitcher.js"></script>
 ```
 
 ### Usage
